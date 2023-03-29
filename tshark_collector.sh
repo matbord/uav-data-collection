@@ -6,6 +6,10 @@ elif [[ $# -eq 1 ]]; then
     FILENAME=tshark_log_$1.pcapng
 fi
 
-tshark -i srs_spgw_sgi -a duration:10 --color -P -w $FILENAME
+tshark -i srs_spgw_sgi -a duration:60 --color -P -w $FILENAME
 # tshark -i tun_srsue -a duration:2750 --color -P -w $FILENAME
 # tshark -i srs_spgw_sgi -a duration:2750 --color -P -w $FILENAME
+
+
+#To export files
+#lxc file pull BaseStation/root/uav-data-collection/tshark_log_2023_03_21_19_46_19.pcapng .
