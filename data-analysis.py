@@ -11,74 +11,18 @@ dir(packet.mavlink_proto) #see all attributes for mavlink_proto
 """
 
 # Open the pcapng file for reading, filtering by "mavlinkproto" command
-capture = pyshark.FileCapture('BS-script.pcapng', display_filter='mavlink_proto')
-dir(capture[1].tcp)
+pcapName=input("Write the pcap file name to read: ")
+csvName=input("Write the name of csv output file: ")
+capture = pyshark.FileCapture(pcapName+'.pcapng')
+#print(capture[0].mavlink_proto.get_field_by_showname('Message id'))
 # Create a new CSV file for writing
-with open('output.csv', 'w', newline='') as outfile:
+with open(csvName+'.csv', 'w', newline='') as outfile:
     # Create a CSV writer object
     writer = csv.writer(outfile)
-
-    # Iterate over the packets in the capture
+    # # Iterate over the packets in the capture
     for packet in capture:
-        # Convert the local timestamp to UTC
-        local_time = datetime.datetime.fromisoformat(packet.sniff_time.isoformat())
-        utc_time = datetime.datetime.utcfromtimestamp(local_time.timestamp())
+        #Write the packet and UTC timestamps to the CSV file
+        #epoch time timestamp, sequence number, pckt message id (command id), source ip/port, destination ip/port, packet size app layer
+        if 'mavlink_proto' in packet:
+            writer.writerow([packet.sniff_timestamp, packet.number, packet.mavlink_proto.get_field_by_showname('Payload'), packet.ip.src_host, packet.tcp.srcport, packet.ip.dst_host, packet.tcp.dstport, packet.length ])
 
-        # Write the packet and UTC timestamps to the CSV file
-        writer.writerow([utc_time, packet.mavlink_proto])
-
-
-
-# # Open the output CSV file for reading
-# with open('output.csv', 'r') as infile:
-#     # Create a CSV reader object
-#     reader = csv.reader(infile)
-
-#     # Iterate over the rows in the file
-#     for row in reader:
-#         # Extract the mavlinkproto field from the row
-#         mavlinkproto = row[2]
-
-#         # Print the name of the packet
-#         print('Packet name:', mavlinkproto)
-
-
-#mockup code
-
-# # Open the first pcapng file for reading
-# capture1 = pyshark.FileCapture('file1.pcapng')
-
-# # Open the second pcapng file for reading
-# capture2 = pyshark.FileCapture('file2.pcapng')
-
-# # Identify the packets in both files that correspond to the same event or transaction
-# packet1 = None
-# packet2 = None
-
-# for packet in capture1:
-#     # Check if this is the first packet of interest
-#     if packet.some_condition:
-#         packet1 = packet
-#         break
-
-# for packet in capture2:
-#     # Check if this is the second packet of interest
-#     if packet.some_condition:
-#         packet2 = packet
-#         break
-
-# # Calculate the one-way time between the packets
-# if packet1 is not None and packet2 is not None:
-#     # Convert the local timestamps to UTC
-#     local_time1 = datetime.datetime.fromisoformat(packet1.sniff_time.isoformat())
-#     local_time2 = datetime.datetime.fromisoformat(packet2.sniff_time.isoformat())
-#     utc_time1 = datetime.datetime.utcfromtimestamp(local_time1.timestamp())
-#     utc_time2 = datetime.datetime.utcfromtimestamp(local_time2.timestamp())
-
-#     # Calculate the one-way time
-#     one_way_time = utc_time2 - utc_time1
-
-#     # Print the one-way time in seconds
-#     print(f"One-way time: {one_way_time.total_seconds()} seconds")
-# else:
-#     print("Packets not found in both files.")
