@@ -25,5 +25,5 @@ with open(csvName+'.csv', 'w', newline='') as outfile:
         #Write the packet and UTC timestamps to the CSV file
         #epoch time timestamp, sequence number, pckt message id (command id), source ip/port, destination ip/port, packet size app layer
         if 'mavlink_proto' in packet:
-            writer.writerow([packet.sniff_timestamp, packet.mavlink_proto.get_field_by_showname('Packet sequence'), packet.mavlink_proto.get_field_by_showname('Payload'), packet.ip.src_host, packet.tcp.srcport, packet.ip.dst_host, packet.tcp.dstport, packet.length ])
+            writer.writerow([packet.sniff_timestamp, packet.tcp.seq, packet.mavlink_proto.get_field_by_showname('Payload'), packet.ip.src_host, packet.tcp.srcport, packet.ip.dst_host, packet.tcp.dstport, packet.length ])
 
