@@ -15,6 +15,7 @@ pcapName=input("Write the pcap file name to read: ")
 csvName=input("Write the name of csv output file: ")
 capture = pyshark.FileCapture(pcapName+'.pcapng')
 #print(capture[0].mavlink_proto.get_field_by_showname('Message id'))
+#print(capture[0].mavlink_proto)
 # Create a new CSV file for writing
 with open(csvName+'.csv', 'w', newline='') as outfile:
     # Create a CSV writer object
@@ -24,5 +25,5 @@ with open(csvName+'.csv', 'w', newline='') as outfile:
         #Write the packet and UTC timestamps to the CSV file
         #epoch time timestamp, sequence number, pckt message id (command id), source ip/port, destination ip/port, packet size app layer
         if 'mavlink_proto' in packet:
-            writer.writerow([packet.sniff_timestamp, packet.number, packet.mavlink_proto.get_field_by_showname('Payload'), packet.ip.src_host, packet.tcp.srcport, packet.ip.dst_host, packet.tcp.dstport, packet.length ])
+            writer.writerow([packet.sniff_timestamp, packet.mavlink_proto.get_field_by_showname('Packet sequence'), packet.mavlink_proto.get_field_by_showname('Payload'), packet.ip.src_host, packet.tcp.srcport, packet.ip.dst_host, packet.tcp.dstport, packet.length ])
 
