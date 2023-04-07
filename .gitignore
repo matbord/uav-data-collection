@@ -279,3 +279,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,matlab,visualstudiocode,python,venv
+
+data/*
+data/
+*.mat
