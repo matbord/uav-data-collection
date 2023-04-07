@@ -3,7 +3,7 @@ close all, clear all, clc
 load("data.mat")
 
 %% Init variables and counters
-search_window_size = 50;
+search_window_size = 200;
 counter_discarded_packets = 0;
 counter_unarrived_packets = 0;
 time_diff = [];

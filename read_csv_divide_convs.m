@@ -70,7 +70,3 @@ for row_ind = 1:Len_BS_csv % loop over the lines of the table
 %     BS_tables{ue_ind,2} = sortrows(BS_tables{ue_ind,2}, "SequenceNumber", "ascend");
 end
 sorting_time = toc
-
-% TODO: clean data to ba saved
-save("data.mat")
-clear all
