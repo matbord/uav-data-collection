@@ -37,7 +37,11 @@ def main():
                 # Write headers
                 writer.writerow(["Timestamp", "SequenceNumber", "MavlinkCommand",
                                 "IPSourceHost", "TCPSourcePort", "IPDestHost",
-                                 "TCPDestPort", "PacketLength"])
+                                 "TCPDestPort", "PacketLength", "Retransmission"])
+
+                # check attributes
+                # see all attributes for mavlink_proto
+                # print(dir(capture[0].tcp.analysis))
 
                 # Iterate over the packets in the capture
                 for packet in capture:
@@ -50,7 +54,7 @@ def main():
                                             'Payload'),
                                         packet.ip.src_host, packet.tcp.srcport,
                                         packet.ip.dst_host, packet.tcp.dstport,
-                                        packet.length])
+                                        packet.length])  # , packet.tcp.analysis.retransmission])
 
 
 if __name__ == "__main__":

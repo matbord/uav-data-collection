@@ -7,13 +7,13 @@ number_ues = 1;
 
 % Read table for BS from csv files and get the number of packets
 BS_csv = readtable("data/BS_data.csv");
-BS_IP = "172.16.0.8";
+BS_IP = "10.241.115.1";
 Len_BS_csv = height(BS_csv);
 
 % Read table for UEs from csv files and get the number of packets
 UE_csv = cell(number_ues);
 Len_UE_csv = zeros(number_ues,1);
-UE_IP = "10.241.115.1";
+UE_IP = "172.16.0.8";
 for ue_ind = 1:number_ues
 % TODO: change here reading pattern of files
     UE_csv{ue_ind} = readtable("data/UE_data.csv");

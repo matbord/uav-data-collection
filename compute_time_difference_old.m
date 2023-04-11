@@ -19,7 +19,7 @@ seq_n = [UE_tables{1,1}(:,2); BS_tables{1,2}(:,2)];
 % end debug
 
 %% Init variables and counters
-search_window_size = 20;
+search_window_size = 500;
 sync_error_est = -10e-3;
 counter_discarded_packets = 0;
 counter_unarrived_packets = 0;
@@ -38,23 +38,6 @@ vars_compared = ["SequenceNumber"];
 %         BS_tables{1,1}.Properties.VariableNames);
 % end
 
-%% Discard packets arrived before the first packet has been sent
-% delete all packets arrived before the time of row; the threshold of 
-% 10e-3 s is to ensure that even if the two devices are not sycnronized, 
-% matching packets are not deleted
-for ue_ind = 1:number_ues % loop over the UEs
-    while UE_tables{ue_ind,2}(1,:).Timestamp < ...
-                (BS_tables{ue_ind,1}(1,:).Timestamp + sync_error_est)
-        UE_tables{ue_ind,2}(1,:) = [];
-        counter_discarded_packets = counter_discarded_packets + 1;
-    end
-    while BS_tables{ue_ind,2}(1,:).Timestamp < ...
-            (UE_tables{ue_ind,1}(1,:).Timestamp + sync_error_est)
-        BS_tables{ue_ind,2}(1,:) = [];
-            counter_discarded_packets = counter_discarded_packets + 1;
-    end
-end
-
 %% Compute time difference
 
 for ue_ind = 1:number_ues % loop over the UEs
@@ -64,6 +47,19 @@ for ue_ind = 1:number_ues % loop over the UEs
     while ~isempty(BS_tables{ue_ind,1}) && ~isempty(UE_tables{ue_ind,2})
         row = BS_tables{ue_ind,1}(1,:);
         BS_tables{ue_ind,1}(1,:) = [];
+        % delete all packets arrived before the time of row; the threshold of 
+        % 10e-3 s is to ensure that even if the two devices are not sycnronized, 
+        % matching packets are not deleted
+        while height(UE_tables{ue_ind,2}) > 0 && ...
+                UE_tables{ue_ind,2}(1,:).Timestamp < (row.Timestamp + sync_error_est)
+
+            % debug
+%             row(:,[1,2,3,8]), UE_tables{ue_ind,2}(1,[1,2,3,8])
+            % end debug
+            
+            UE_tables{ue_ind,2}(1,:) = [];
+            counter_discarded_packets = counter_discarded_packets + 1;
+        end
         for row_ind = 1:min(search_window_size,height(UE_tables{ue_ind,2}))
             
             % debug
@@ -93,6 +89,13 @@ for ue_ind = 1:number_ues % loop over the UEs
     while ~isempty(UE_tables{ue_ind,1}) && ~isempty(BS_tables{ue_ind,2})
         row = UE_tables{ue_ind,1}(1,:);
         UE_tables{ue_ind,1}(1,:) = [];
+        % delete all packets arrived before the time of row; the threshold of 
+        % 10e-3 s is to ensure that even if the two devices are not sycnronized, 
+        % matching packets are not deleted
+        while BS_tables{ue_ind,2}(1,:).Timestamp < row.Timestamp + sync_error_est
+            BS_tables{ue_ind,2}(1,:) = [];
+            counter_discarded_packets = counter_discarded_packets + 1;
+        end
         for row_ind = 1:min(search_window_size,height(BS_tables{ue_ind,2}))
             % check conditions for compared variables
             conditions = false(length(vars_compared),1);
