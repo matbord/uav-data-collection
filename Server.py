@@ -11,7 +11,7 @@ import time
 # create an INET, STREAMing socket
 server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 host_name  = socket.gethostname()
-host_ip = socket.gethostbyname(host_name)
+host_ip = "10.241.115.1"
 print('HOST IP:',host_ip)
 port = 8080
 socket_address = (host_ip,port)
@@ -25,19 +25,22 @@ print('Socket bind complete')
 #It specifies the number of unaccepted connections that the system will allow before refusing new connections.
 server_socket.listen(5)
 print('Socket now listening')
-frame_rate = 10
+frame_rate = 30
 prev = 0
 while True:
     client_socket,addr = server_socket.accept()
     print('Connection from:',addr)
     if client_socket:
         vid = cv2.VideoCapture(0)
+        vid.set(3, 176)
+        vid.set(4, 144)
         while(vid.isOpened()):
             time_elapsed = time.time() - prev
             if time_elapsed > 1./frame_rate:
                 prev = time.time()
                 img,frame = vid.read()
                 a = pickle.dumps(frame)
+                #a = cv2.resize(a, (1920, 1080))
                 message = struct.pack("Q",len(a))+a
                 client_socket.sendall(message)
                 cv2.imshow('Sending...',frame)
