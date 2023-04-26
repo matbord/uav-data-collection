@@ -30,6 +30,24 @@ def main():
             file_name = f"{args.pcapng_dir}/{file}"
             capture = pyshark.FileCapture(file_name)
 
+            # check attributes
+            # see all attributes for mavlink_proto
+            # print(dir(capture[0].tcp.analysis))
+
+            # Iterate over the packets in the capture
+            data_map = {}
+            for packet in capture:
+                # Write the chosen variables in
+                # epoch time, tcp sequence number, pckt message id (command id),
+                # source ip/port, destination ip/port, packet size app layer
+                if 'mavlink_proto' in packet:
+                    # print duplicate packets
+                    # if packet.tcp.seq in data_map:
+                    #     print("Duplicate packet found: " + str(packet.tcp.seq))
+
+                    # packets with the same key are overwritten, so we only keep the last one
+                    data_map[packet.tcp.seq] = packet
+
             # Create a new CSV file for writing
             with open(file_path_no_ext + '.csv', 'w', newline='') as outfile:
                 # Create a CSV writer object
@@ -39,22 +57,7 @@ def main():
                                 "IPSourceHost", "TCPSourcePort", "IPDestHost",
                                  "TCPDestPort", "PacketLength", "Retransmission"])
 
-                # check attributes
-                # see all attributes for mavlink_proto
-                # print(dir(capture[0].tcp.analysis))
-
-                # Iterate over the packets in the capture
-                for packet in capture:
-                    # Write the chosen variables into the csv file. The variables are:
-                    # epoch time, tcp sequence number, pckt message id (command id),
-                    # source ip/port, destination ip/port, packet size app layer
-                    if 'mavlink_proto' in packet:
-                        writer.writerow([packet.sniff_timestamp, packet.tcp.seq,
-                                        packet.mavlink_proto.get_field_by_showname(
-                                            'Payload'),
-                                        packet.ip.src_host, packet.tcp.srcport,
-                                        packet.ip.dst_host, packet.tcp.dstport,
-                                        packet.length])  # , packet.tcp.analysis.retransmission])
+                writer.writerows(data_map.values())
 
 
 if __name__ == "__main__":
