@@ -6,7 +6,7 @@ elif [[ $# -eq 1 ]]; then
     FILENAME=tshark_log_$1.pcapng
 fi
 
-tshark -i srs_spgw_sgi -a duration:60 --color -P -w $FILENAME
+tshark -i srs_spgw_sgi -a duration:1800 --color -P -w $FILENAME
 # tshark -i tun_srsue -a duration:2750 --color -P -w $FILENAME
 # tshark -i srs_spgw_sgi -a duration:2750 --color -P -w $FILENAME
 

@@ -31,3 +31,6 @@ while True:
 # Release resources
 cv2.destroyAllWindows()
 client_socket.close()
+
+
+
