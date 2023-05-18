@@ -9,7 +9,7 @@ fi
 echo "Execute commands"
 tmux split-window "bash execCommands.sh"
 
-tshark -i srs_spgw_sgi -a duration:1800 --color -P -w $FILENAME
+tshark -i srs_spgw_sgi -a duration:10 --color -P -w $FILENAME
 # tshark -i tun_srsue -a duration:2750 --color -P -w $FILENAME
 # tshark -i srs_spgw_sgi -a duration:2750 --color -P -w $FILENAME
 

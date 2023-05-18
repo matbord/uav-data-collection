@@ -1,2 +1,2 @@
 echo "execute drone commands"
-python3 Matteo/BasicArdu/CommandSequence.py
+python3 BasicArducopter/Matteo/BasicArdu/CommandSequence.py
