@@ -6,7 +6,7 @@ def main():
     # simple use example
     print('---Starting Basic Drone---')
     drone  = BasicArdu(connection_string='tcp:10.228.150.1:5760')    # connect to Intel Aero using 'North, East, Down' Reference Basis
-
+    sleep(5)
     for x in range(0,200):
         print('Loop number ', x)
         #arming

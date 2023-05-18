@@ -6,7 +6,7 @@ elif [[ $# -eq 1 ]]; then
     FILENAME=tshark_log_$1.pcapng
 fi
 
-echo "Add IP route to Gnb"
+echo "Execute commands"
 tmux split-window "bash execCommands.sh"
 
 tshark -i srs_spgw_sgi -a duration:1800 --color -P -w $FILENAME
