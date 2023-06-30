@@ -1,0 +1,76 @@
+window 500
+time_UE_to_BS =
+
+     1.367516180000000e+02
+
+Number of packet collected:        13434
+Number of packets matched:         6436
+Number of packets with seq match:  6436
+Number of packets unarrived:       478
+Number of packets discarded:       12
+Number of total packets analised:  13434
+
+
+window 500 (without first 60 rows in BS_tables{1,1}
+time_UE_to_BS =
+
+  13.482037000000000
+
+Number of packet collected:        13434
+Number of packets matched:         6388
+Number of packets with seq match:  6388
+Number of packets unarrived:       466
+Number of packets discarded:       60
+Number of total packets analised:  13374
+
+
+window 500
+time_UE_to_BS =
+
+     1.374994570000000e+02
+
+Number of packet collected:        13434
+Number of packets matched:         6436
+Number of packets with seq match:  6436
+Number of packets unarrived:       478
+Number of packets discarded:       12
+Number of total packets analised:  13434
+
+
+window 100
+time_UE_to_BS =
+
+  38.160127000000003
+
+Number of packet collected:        13434
+Number of packets matched:         6436
+Number of packets with seq match:  6436
+Number of packets unarrived:       478
+Number of packets discarded:       12
+Number of total packets analised:  13434
+
+
+window 50
+time_UE_to_BS =
+
+  23.671689000000001
+
+Number of packet collected:        13434
+Number of packets matched:         6436
+Number of packets with seq match:  6436
+Number of packets unarrived:       478
+Number of packets discarded:       12
+Number of total packets analised:  13434
+
+
+window 15
+time_UE_to_BS =
+
+  16.538888000000000
+
+Number of packet collected:        13434
+Number of packets matched:         6435
+Number of packets with seq match:  6435
+Number of packets unarrived:       481
+Number of packets discarded:       12
+Number of total packets analised:  13433

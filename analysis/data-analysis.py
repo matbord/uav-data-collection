@@ -70,10 +70,10 @@
 # if __name__ == "__main__":
 #     main()
 
-#OLD CODE WITHOUT REMOVING RETRANSMISSION
+# OLD CODE WITHOUT REMOVING RETRANSMISSION
 
 import argparse
-import csv  # try alternatively csvdict for better performance?
+import csv
 import os
 import pyshark
 
@@ -111,7 +111,7 @@ def main():
                 # Write headers
                 writer.writerow(["Timestamp", "SequenceNumber", "MavlinkCommand",
                                 "IPSourceHost", "TCPSourcePort", "IPDestHost",
-                                 "TCPDestPort", "PacketLength"]) 
+                                 "TCPDestPort", "PacketLength"])
 
                 # check attributes
                 # see all attributes for mavlink_proto
@@ -128,8 +128,8 @@ def main():
                                             'Payload'),
                                         packet.ip.src_host, packet.tcp.srcport,
                                         packet.ip.dst_host, packet.tcp.dstport,
-                                        packet.length])  
+                                        packet.length])
+
 
 if __name__ == "__main__":
     main()
-
