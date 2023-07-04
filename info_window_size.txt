@@ -11,7 +11,7 @@ Number of packets discarded:       12
 Number of total packets analised:  13434
 
 
-window 500 (without first 60 rows in BS_tables{1,1}
+window 500 (without first 60 rows in bs_tables{1,1}
 time_UE_to_BS =
 
   13.482037000000000
